@@ -38,3 +38,36 @@ var quizQuestions = [
 console.log("Question 1:", quizQuestions[0].question);
 console.log("Options for Question 1:", quizQuestions[0].options);
 console.log("Correct Answer for Question 1:",quizQuestions[0].correctAnswer);
+
+let currentQuestionIndex = 0;
+
+function displayQuestion() {
+    const currentQuestion = quizQuestions[currentQuestionIndex];
+
+    document.querySelector('.questions').textContent = currentQuestion.question;
+
+    const answersUI = document.querySelector('.answers');
+    answersUI.innerHTML = '';
+
+    currentQuestion.options.forEach(option => {
+        const li = document.createElement('li');
+        li.textContent = option;
+        answersUI.appendChild(li);
+    });
+};
+
+document.getElementById('next-btn').addEventListener('click', function() {
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
+        displayQuestion();
+    }
+});
+
+document.getElementById('prev-btn').addEventListener('click', function() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        displayQuestion();
+    }
+});
+
+displayQuestion();
