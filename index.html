@@ -5,23 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Interactive Quiz App</title>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="quiz-container">
         <div class="questions">Questions Area</div>
+        <div class="fill-in-the-blank" style="display:none">
+            <input type="text" id="fill-in-answer" placeholder="Type answer here">
+        </div>
+        <div class="matching" style="display:none">
+            <!-- dom manipulation -->
+        </div>
+        <div class="ordering" style="display: none;">
+            <!-- dom manipulation -->
+        </div>
         <ul class="answers">
-
+            <!-- options for multiple choice -->
         </ul>
         <div class="btn-container">
-            <button id="pre-btn">Previous</button>
-            <button id="submit-btn">Submit</button>
+            <button id="prev-btn">Previous</button>
             <button id="next-btn">Next</button>
+            <button id="submit-btn">Submit</button>
         </div>
-        <footer>
-            <div class="fireAnimation"></div>
-            <div class="fireAnimation"></div>
-            <div class="fireAnimation"></div>
-        </footer>
     </div>
 </body>
 </html>
