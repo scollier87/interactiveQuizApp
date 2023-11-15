@@ -1,40 +1,36 @@
-// JavaScript object to store quiz questions and answers
+var currentQuestion = 0;
+var quizQuestions;
 
-var quizQuestions = [
-    {
-        question: "What is the capital of France?",
-        options: ["Berlin", "Madrid", "Paris", "Rome"],
-        correctAnswer: "Paris"
-    },
-    {
-        question: "Which planet is known as the Red Planet?",
-        options: ["Venus", "Mars", "Jupiter", "Saturn"],
-        correctAnswer: "Mars"
-    },
-    {
-        question: "The Eiffel Tower is located in which city?",
-        options: ["London", "Paris", "New York", "Tokyo"],
-        correctAnswer: "Paris"
-    },
-    {
-        question: "What is the capital of France?",
-        options: ["Berlin", "Madrid", "Paris", "Rome"],
-        correctAnswer: "Paris"
-    },
-    {
-        question: "JavaScript is a programming Language commonly used for both front-end and back-end web development.",
-        options: ["True", "False"],
-        correctAnswer: "True"
-    },
-    {
-        question: "The currency of Japan is Yuan",
-        options: ["True", "False"],
-        correctAnswer: "False"
-    },
-];
+//Loading the questions from an external JSON file
+fetch('quiz-questions.json')
+    .then(response => response.json())
+    .then(data => {
+        quizQuestions = shuffleArray(data);
+        // Initialize the quiz with the first question
+        loadRandomQuestion();
+    })
+    .catch(error => console.error("Error loading questions:", error));
 
-//Testing to see if the data is accessible
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i>0; i--) {
+            var j = Math.floor(Math.random()*(i+1));
+            [array[i], array[j] = array[j], array[i]];
+        }
+        return array;
+    }
 
-console.log("Question 1:", quizQuestions[0].question);
-console.log("Options for Question 1:", quizQuestions[0].options);
-console.log("Correct Answer for Question 1:",quizQuestions[0].correctAnswer);
+function loadRandomQuestion() {
+    
+    currentQuestion = Math.floor(Math.random() * quizQuestions.length);
+
+    var questionData = quizQuestions[currentQuestion];
+    console.log(questionData.question);
+}
+
+function goToNextQuestion() {
+    loadRandomQuestion();
+}
+
+var nextButton = document.getElementById('next-btn');
+nextButton.addEventListener('click', goToNextQuestion);
+
