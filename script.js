@@ -17,11 +17,6 @@ var quizQuestions = [
         correctAnswer: "Paris"
     },
     {
-        question: "What is the capital of France?",
-        options: ["Berlin", "Madrid", "Paris", "Rome"],
-        correctAnswer: "Paris"
-    },
-    {
         question: "JavaScript is a programming Language commonly used for both front-end and back-end web development.",
         options: ["True", "False"],
         correctAnswer: "True"
@@ -31,6 +26,27 @@ var quizQuestions = [
         options: ["True", "False"],
         correctAnswer: "False"
     },
+    {
+        type: "fill-in-the-blank",
+        question: "Complete the sentence: The capital of the United States of America is ___.",
+        correctAnswer: "Washington"
+    },
+    {
+        type: "matching",
+        question: "Match the shape with its name",
+        pairs: {
+            "Circle": "🔵",
+            "Square": "🟥",
+            "Triangle": "🔺"
+        },
+        correctOrder: ["Circle", "Square", "Triangle"]
+    },
+    {
+        type: "ordering",
+        question: "Order the days of the week starting from Monday",
+        events: ["Saturday", "Monday", "Wednesday", "Friday", "Tuesday", "Thursday", "Sunday"],
+        correctOrder: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    }
 ];
 
 //Testing to see if the data is accessible
