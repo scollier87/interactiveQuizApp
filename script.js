@@ -99,6 +99,96 @@ function displayFillInTheBlankQuestion() {
     document.querySelector('.fill-in-the-blank').style.display = 'block';
 };
 
+function displayMatchingQuestion(question) {
+    const matchingArea = document.querySelector('.matching');
+    matchingArea.innerHTML = '';
+    matchingArea.style.display = 'block';
+
+    Object.keys(question.pairs).forEach((key, index) => {
+        const label = document.createElement('label');
+        label.textContent = key + ': ';
+        matchingArea.appendChild(label);
+
+        const select = document.createElement('select');
+        select.id = 'match-' + index;
+
+        Object.values(question.pairs).forEach(value => {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = value;
+            select.appendChild(option);
+        })
+
+        matchingArea.appendChild(select);
+        matchingArea.appendChild(document.createElement('br'));
+    })
+}
+
+function displayOrderingQuestion(question) {
+    const orderingArea = document.querySelector('.ordering')
+    orderingArea.innerHTML = '';
+    orderingArea.style.display = 'block';
+
+    const list = document.createElement('ul');
+    list.id = 'ordering-list';
+
+    question.events.forEach(event => {
+        const listItem = document.createElement('li');
+        listItem.textContent = event;
+        list.appendChild(listItem);
+    });
+
+    orderingArea.appendChild(list);
+
+    const moveUpButton = document.createElement('button');
+    moveUpButton.textContent = 'Move Up';
+    moveUpButton.onclick = () => moveItem(-1);
+    orderingArea.appendChild(moveUpButton);
+
+    const moveDownButton = document.createElement('button');
+    moveDownButton.textContent = 'Move Down';
+    moveDownButton.onclick = () => moveItem(1);
+    orderingArea.appendChild(moveDownButton);
+}
+
+function moveItem(direction) {
+    const list = document.getElementById('ordering-list');
+    const selected = list.querySelector('.selected');
+
+    if (!selected) return;
+
+    if (direction === -1) { //Move up
+        const previousItem = selected.previousElementSibling;
+        if(previousItem) {
+            list.insertBefore(selected, previousItem);
+        }
+    } else if (direction === 1) { //Move down
+        const nextItem = selected.nextElementSibling;
+        if (nextItem) {
+            list.insertBefore(selected, nextItem.nextSibling);
+        }
+    }
+}
+
+document.querySelector('.ordering').addEventListener('click', function(event) {
+    if (event.target.tagName === "LI") {
+        if (document.querySelector('.selected')) {
+            document.querySelector('.selected').classList.remove('selected');
+        }
+        event.target.classList.add('selected');
+    }
+});
+
+document.querySelector('.quiz-container').addEventListener('click', function(event) {
+    if (event.target.tagName === "LI" && event.target.parentElement.id === 'ordering-list') {
+        const currentlySelected = document.querySelector('.ordering .selected');
+        if (currentlySelected) {
+            currentlySelected.classList.remove('selected');
+        }
+        event.target.classList.add('selected');
+    }
+})
+
 document.getElementById('next-btn').addEventListener('click', function() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
         currentQuestionIndex++;

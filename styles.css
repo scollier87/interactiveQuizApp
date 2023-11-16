@@ -2,3 +2,8 @@ body {
     height: 100vh;
     background-image: linear-gradient(grey, lightblue);
 }
+
+
+#ordering-list .selected {
+    background-color: forestgreen;
+}
