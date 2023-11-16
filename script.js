@@ -95,6 +95,10 @@ function displayMultipleChoiceQuestion(question) {
     });
 }
 
+function displayFillInTheBlankQuestion() {
+    document.querySelector('.fill-in-the-blank').style.display = 'block';
+};
+
 document.getElementById('next-btn').addEventListener('click', function() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
         currentQuestionIndex++;
