@@ -59,18 +59,41 @@ let currentQuestionIndex = 0;
 
 function displayQuestion() {
     const currentQuestion = quizQuestions[currentQuestionIndex];
-
     document.querySelector('.questions').textContent = currentQuestion.question;
 
     const answersUI = document.querySelector('.answers');
+    answersUI.style.display = 'none';
     answersUI.innerHTML = '';
+    document.querySelector('.fill-in-the-blank').style.display = 'none';
+    document.querySelector('.matching').style.display = 'none';
+    document.querySelector('.ordering').style.display = 'none';
 
-    currentQuestion.options.forEach(option => {
+    // Check the question type and display accordingly
+    switch (currentQuestion.type) {
+        case 'fill-in-the-blank':
+            displayFillInTheBlankQuestion();
+            break;
+        case 'matching':
+            displayMatchingQuestion(currentQuestion);
+            break;
+        case 'ordering':
+            displayOrderingQuestion(currentQuestion);
+            break;
+        default:
+            displayMultipleChoiceQuestion(currentQuestion);
+    }
+};
+
+function displayMultipleChoiceQuestion(question) {
+    const answersUI = document.querySelector('.answers');
+    answersUI.style.display = 'block';
+
+    question.options.forEach(option => {
         const li = document.createElement('li');
         li.textContent = option;
         answersUI.appendChild(li);
     });
-};
+}
 
 document.getElementById('next-btn').addEventListener('click', function() {
     if (currentQuestionIndex < quizQuestions.length - 1) {
