@@ -54,13 +54,18 @@ var quizQuestions = [
 console.log("Question 1:", quizQuestions[0].question);
 console.log("Options for Question 1:", quizQuestions[0].options);
 console.log("Correct Answer for Question 1:",quizQuestions[0].correctAnswer);
-
+//Initialize the index of the current question
 let currentQuestionIndex = 0;
 
+//Function to display the current question based on it's type
 function displayQuestion() {
+    //Get the current question from the quizQuestions array
     const currentQuestion = quizQuestions[currentQuestionIndex];
+
+    //Display the question text
     document.querySelector('.questions').textContent = currentQuestion.question;
 
+    //Hide all question type elements and clear any previous answers
     const answersUI = document.querySelector('.answers');
     answersUI.style.display = 'none';
     answersUI.innerHTML = '';
@@ -68,7 +73,7 @@ function displayQuestion() {
     document.querySelector('.matching').style.display = 'none';
     document.querySelector('.ordering').style.display = 'none';
 
-    // Check the question type and display accordingly
+    // Check the question type and display the appropriate UI elements
     switch (currentQuestion.type) {
         case 'fill-in-the-blank':
             displayFillInTheBlankQuestion();
@@ -84,10 +89,13 @@ function displayQuestion() {
     }
 };
 
+//Function to display multiple choice
 function displayMultipleChoiceQuestion(question) {
+    //Show the answers UI and populate with options
     const answersUI = document.querySelector('.answers');
     answersUI.style.display = 'block';
 
+    //Create a list item for each option and add it to the answers UI
     question.options.forEach(option => {
         const li = document.createElement('li');
         li.textContent = option;
@@ -95,15 +103,20 @@ function displayMultipleChoiceQuestion(question) {
     });
 }
 
+//Function to display the fill-in-the-blank questions
 function displayFillInTheBlankQuestion() {
+    //Show the fill-in-the-blank input element
     document.querySelector('.fill-in-the-blank').style.display = 'block';
 };
 
+//Function to display matching questions
 function displayMatchingQuestion(question) {
+    //Prepare the matching area and show it
     const matchingArea = document.querySelector('.matching');
     matchingArea.innerHTML = '';
     matchingArea.style.display = 'block';
 
+    //Create labels and dropdowns for each pair in the question
     Object.keys(question.pairs).forEach((key, index) => {
         const label = document.createElement('label');
         label.textContent = key + ': ';
@@ -112,6 +125,7 @@ function displayMatchingQuestion(question) {
         const select = document.createElement('select');
         select.id = 'match-' + index;
 
+        //Add options to the dropdown from the pairs
         Object.values(question.pairs).forEach(value => {
             const option = document.createElement('option');
             option.value = value;
@@ -124,11 +138,14 @@ function displayMatchingQuestion(question) {
     })
 }
 
+//Function to display ordering questions
 function displayOrderingQuestion(question) {
+    //Prepare the ordering area and show it
     const orderingArea = document.querySelector('.ordering')
     orderingArea.innerHTML = '';
     orderingArea.style.display = 'block';
 
+    //Create a list and populate it with events that need to be ordered
     const list = document.createElement('ul');
     list.id = 'ordering-list';
 
@@ -140,6 +157,7 @@ function displayOrderingQuestion(question) {
 
     orderingArea.appendChild(list);
 
+    //Add buttons to move selected list items up and down
     const moveUpButton = document.createElement('button');
     moveUpButton.textContent = 'Move Up';
     moveUpButton.onclick = () => moveItem(-1);
@@ -151,12 +169,15 @@ function displayOrderingQuestion(question) {
     orderingArea.appendChild(moveDownButton);
 }
 
+//Function to move an item up or down in the ordering list
 function moveItem(direction) {
     const list = document.getElementById('ordering-list');
     const selected = list.querySelector('.selected');
 
+    //If no item is selected, do nothing
     if (!selected) return;
 
+    //Move the selected item up or down
     if (direction === -1) { //Move up
         const previousItem = selected.previousElementSibling;
         if(previousItem) {
@@ -170,8 +191,10 @@ function moveItem(direction) {
     }
 }
 
+//Event listener for selecting items in the ordering list
 document.querySelector('.ordering').addEventListener('click', function(event) {
     if (event.target.tagName === "LI") {
+        //Remove selection from any previously selected item
         if (document.querySelector('.selected')) {
             document.querySelector('.selected').classList.remove('selected');
         }
